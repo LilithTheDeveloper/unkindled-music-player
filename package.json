@@ -1,0 +1,22 @@
+{
+  "name": "unkindled-music-player",
+  "version": "1.0.0",
+  "description": "A music player",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LilithTheDeveloper/unkindled-music-player.git"
+  },
+  "keywords": [
+    "music"
+  ],
+  "author": "LilithTheDeveloper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LilithTheDeveloper/unkindled-music-player/issues"
+  },
+  "homepage": "https://github.com/LilithTheDeveloper/unkindled-music-player#readme"
+}
