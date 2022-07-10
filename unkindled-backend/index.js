@@ -12,9 +12,28 @@ const filesJson = helper.loadMusicJson();
 
 console.log(filesJson)
 
-app.get('/api/getmusiclist', (req, res) => {
+app.get('/api/songs', (req, res) => {
   console.log(`Received a request by ${req}}`)
   res.send(filesJson)
+})
+
+app.patch('/api/songs', (req, res) => {
+
+})
+
+app.post('/api/songs', (req, res) => {
+  if(!req.files){
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  const myFile = req.files.file;
+
+  myFile.mv('./public/music/' + myFile.name, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send('File uploaded!');
+  });
 })
 
 app.get('/api/getsong', (req, res) => {
