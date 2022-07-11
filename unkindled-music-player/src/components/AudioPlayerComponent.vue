@@ -1,10 +1,13 @@
 <template>
   <v-card>
+    <v-text-field
+      solo
+      dense
+      v-model="name"
+      @change="$emit('titleChanged', { name: $event, id: player.id })"
+    ></v-text-field>
     <v-row class="mx-auto">
-      <v-card-title></v-card-title>
-      <v-progress></v-progress>
-      Now Playing
-
+      <span center class="ml-5"><b>Now Playing</b></span>
       <span class="mx-auto">
         <v-btn icon class="ml-3 mr-3"><v-icon>mdi-play</v-icon></v-btn>
         <v-btn icon class="ml-3 mr-3"><v-icon>mdi-pause</v-icon></v-btn>
@@ -12,7 +15,7 @@
         <v-btn icon class="ml-3 mr-3"><v-icon>mdi-stop</v-icon></v-btn>
       </span>
     </v-row>
-    <v-slider class="ml-12 mr-12 mt-3" v-model="volume"></v-slider>
+    <v-slider class="ml-12 mr-12 mt-3" :value="player.volume"></v-slider>
   </v-card>
 </template>
 
@@ -23,7 +26,29 @@ export default {
       volume: 0.5,
       isLoop: false,
       isPlaying: false,
+      currentSong: {},
     };
   },
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+    player: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    name: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      },
+    },
+  },
+  methods: {},
 };
 </script>

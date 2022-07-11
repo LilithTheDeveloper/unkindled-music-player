@@ -12,10 +12,13 @@ Vue.use(PiniaVuePlugin);
 setMapStoreSuffix("");
 const pinia = createPinia();
 
+console.log(`${process.env.VUE_APP_LOCAL_IP}`);
+
 const axiosConfig = {
-  baseURL: "http://localhost:8000/api",
+  baseURL: `http://${process.env.VUE_APP_LOCAL_IP}/api`,
 };
 Vue.prototype.$axios = axios.create(axiosConfig);
+Vue.prototype.$static = `http://${process.env.VUE_APP_LOCAL_IP}/`;
 
 Vue.config.productionTip = false;
 

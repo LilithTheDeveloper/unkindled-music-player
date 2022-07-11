@@ -12,10 +12,8 @@ exports.registerMusic = function() {
         throw err;
     }
 
-    console.log("Currently saved: " + filesJson.length);
-
     files.forEach(file => {
-      if(!isFileRegistered(file)){
+      if(!isFileRegistered(file) && file.endsWith('.mp3')){
         var fileObject = {
           hash: getFileHash(dir + file),
           name: file,
@@ -27,17 +25,22 @@ exports.registerMusic = function() {
         console.log(`File ${file} registered`);
       }
       else{
-        console.log('File already registered');
+        //console.log('File already registered');
       }
     });
 
+    checkFileIntegrity();
+
     if(count > 0){
       saveMusicJson();
+      console.log("Successfully registered music.")
     }
     else{
       console.log('No new files registered');
     }
   });
+
+  
 }
 
 function loadMusicJson(){
@@ -46,6 +49,29 @@ function loadMusicJson(){
   }
   else {
     return [];
+  }
+}
+
+//remove removed files from json
+function checkFileIntegrity(){
+  var changedFiles = 0;
+  console.log("Checking for file integrity")
+  const dir = './public/music/'
+  
+
+  filesJson.forEach(file => {
+    if(!fs.existsSync(file.path)){
+      filesJson.splice(filesJson.indexOf(file), 1);
+      changedFiles++;
+    }
+  });
+
+  if(changedFiles > 0){
+    saveMusicJson();
+    console.log("Successfully removed files from json.")
+  }
+  else{
+    console.log('No files changed');
   }
 }
 

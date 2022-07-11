@@ -38,11 +38,15 @@ export const useMusicStore = defineStore('musicStore', {
     },
     addSong(songFile){
       const formData = new FormData();
-      formData.append("file", songFile);
+      formData.append("files", songFile);
 
       return new Promise((resolve, reject) => {
         Vue.prototype.$axios
-          .post("/songs", formData)
+          .post("/songs", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
           .then((response) => {
             console.log(response);
             resolve(response);

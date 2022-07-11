@@ -1,5 +1,8 @@
 const express = require('express')
 const cors = require('cors')
+const multer = require('multer')
+const upload = multer({ dest: './public/music' })
+const fs = require('fs');
 const helper = require('./music-registration.js');
 
 const app = express()
@@ -10,7 +13,11 @@ app.use(cors())
 helper.registerMusic()
 const filesJson = helper.loadMusicJson();
 
-console.log(filesJson)
+app.use((err, req, res, next)=> {
+  if(err) console.log(err);
+  next();
+});
+
 
 app.get('/api/songs', (req, res) => {
   console.log(`Received a request by ${req}}`)
@@ -21,24 +28,26 @@ app.patch('/api/songs', (req, res) => {
 
 })
 
-app.post('/api/songs', (req, res) => {
-  if(!req.files){
+app.post('/api/songs', upload.single('file'),(req, res) => {
+  console.log("Received a new song");
+  if(!req.file){
     return res.status(400).send('No files were uploaded.');
   }
 
-  const myFile = req.files.file;
+  const myFile = req.file;
 
-  myFile.mv('./public/music/' + myFile.name, (err) => {
+  console.log(myFile)
+
+  fs.renameSync(myFile.path, myFile.path.replace(`${myFile.filename}`, `${myFile.originalname}`), (err) => {
     if (err) {
       return res.status(500).send(err);
     }
-    res.send('File uploaded!');
+    helper.registerMusic();
+    res.status(200).send('File uploaded!');
   });
-})
+});
 
-app.get('/api/getsong', (req, res) => {
-  res.sendFile(__dirname + '/public/music/' + req.query.song)
-})
+app.use(express.static('./public'))
 
 app.listen(port, () => {
   console.log(`Backend running on ${port}`)

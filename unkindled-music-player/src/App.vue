@@ -4,21 +4,13 @@
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2"
+          class="shrink mr-5"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          :src="imageSrc"
           transition="scale-transition"
           width="40"
         />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        Unkindled Music Player
       </div>
 
       <v-spacer></v-spacer>
@@ -38,7 +30,7 @@ export default {
   name: "App",
 
   data: () => ({
-    //
+    imageSrc: `http://localhost:8000/images/bonfire_logo.png`,
   }),
 };
 </script>

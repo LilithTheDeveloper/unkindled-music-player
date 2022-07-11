@@ -3,28 +3,11 @@
     <v-card>
       <v-card-title>Add Song</v-card-title>
       <v-card-text>
-        <!-- <v-text-field
-          v-model="songName"
-          label="Song Name"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="songArtist"
-          label="Artist"
-          required
-        ></v-text-field>
-        <v-text-field v-model="songAlbum" label="Album" required></v-text-field>
-        <v-text-field v-model="songYear" label="Year" required></v-text-field>
-        <v-text-field v-model="songGenre" label="Genre" required></v-text-field>
-        <v-text-field v-model="songTrack" label="Track" required></v-text-field>
-        <v-text-field
-          v-model="songDuration"
-          label="Duration"
-          required
-        ></v-text-field> -->
         <v-file-input
           v-model="songFileInput"
-          @change="onFileChange"
+          @change="onFileChange($event)"
+          prepend-icon="mdi-music-note"
+          accept="audio/*"
         ></v-file-input>
       </v-card-text>
       <v-card-actions>
@@ -64,12 +47,15 @@ export default {
     },
   },
   methods: {
-    onFileChange(e) {
-      const selectedFile = e.target.files[0];
-      this.songFileInput = selectedFile;
+    onFileChange(event) {
+      console.log(event);
     },
     uploadSong() {
-      useMusicStore().addSong(this.songFileInput);
+      useMusicStore()
+        .addSong(this.songFileInput)
+        .then(() => {
+          this.dialog = false;
+        });
     },
   },
 };
