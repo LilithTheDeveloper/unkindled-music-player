@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="youtube-song-element">
     <v-text-field
       solo
       dense
@@ -51,4 +51,16 @@ export default {
   },
   methods: {},
 };
+</script>
+
+<style>
+
+.local-song-element{
+  background-color: yellow
+}
+
+.youtube-song-element{
+  background-color: #FF0000
+}
+
 </script>
